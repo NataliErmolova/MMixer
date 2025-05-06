@@ -1,0 +1,177 @@
+/* Main container styling */
+#LogIn{
+  padding-top: 0px !important;
+
+}
+
+.LogIn {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .login-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0px 800px rgba(58, 13, 192, 0.767);
+    padding: 30px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Toggle buttons container */
+  .log-in, .register {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  
+  /* Button styling */
+  .log-in-button, .register-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: 1;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  .log-in-button {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  .register-button {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  /* Button states based on selection */
+  .log-in .log-in-button {
+    background-color: #4285f4;
+    color: white;
+    transform: translateY(-5px);
+  }
+  
+  .register .register-button {
+    background-color: #4285f4;
+    color: white;
+    transform: translateY(-5px);
+  }
+  
+  /* Input styling */
+  .login-container input {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+  }
+  
+  .login-container input:focus {
+    border-color: #4285f4;
+    outline: none;
+  }
+
+  .log-in input:nth-child(2){
+    display: none;
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease;
+  }
+  
+  /* Hide confirm password by default (when in login mode) */
+  .log-in input:nth-child(5) {
+    display: none;
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease;
+  }
+  
+  /* Show confirm password when in register mode */
+  .register input:nth-child(4) {
+    display: block;
+    opacity: 1;
+    height: auto;
+    padding: 12px 15px;
+  }
+  .confirmation-btn {
+    background-color: #4285f4;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(66, 133, 244, 0.3);
+    width: 100%;
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+  }
+  
+  .confirmation-btn:hover {
+    background-color: #3367d6;
+    box-shadow: 0 4px 8px rgba(66, 133, 244, 0.4);
+    transform: translateY(-2px);
+  }
+  
+  .confirmation-btn:active {
+    background-color: #2955c8;
+    box-shadow: 0 1px 3px rgba(66, 133, 244, 0.3);
+    transform: translateY(1px);
+  }
+  
+  .confirmation-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.3);
+  }
+
+  /* Forgot password button styling */
+.forgot-pass {
+    border: none;
+    background: none;
+    color: #4285f4;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: right;
+    padding: 5px;
+    margin-top: -10px;
+    align-self: flex-end;
+    transition: color 0.3s ease;
+  }
+  
+  .forgot-pass:hover {
+    color: #2b60c5;
+    text-decoration: underline;
+  }
+  
+  /* Hide forgot password button when in register mode */
+  .login-container.register .forgot-pass {
+    display: none;
+  }
+  
+  /* Animation for the inputs */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

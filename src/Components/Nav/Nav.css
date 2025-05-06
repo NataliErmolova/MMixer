@@ -1,0 +1,61 @@
+.navigation {
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(26, 55, 85);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 0 20px;
+}
+
+.right_nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 40%;
+    height: 60px;
+    margin: 5px 15px;
+}
+
+.right_nav button{
+    width: 90px;
+    margin-top: 0px !important;
+}
+
+.left_nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50%;
+    height: 60px;
+    margin: 5px 15px;
+
+}
+
+.input-group {
+    width: 500px !important;
+    margin: 0 !important;
+
+}
+.form-control{
+    margin: 0px 7px;
+}
+
+.input-group Button{
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+}
+.navigation img{
+    width: 45px;
+    height: 45px;
+}
+.navigation a {
+    margin-left: 10px;
+}
+.form-control:focus {
+    box-shadow: 0 0 0 .15rem rgba(13,110,253,.25) !important;
+}
