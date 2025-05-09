@@ -20,7 +20,7 @@ function Listen({setNowPlaying}){
             try{
                 const loadedRecents = await getRecentlyPlayed();
                 setSearchResults(loadedRecents);
-                console.log(loadedRecents);
+                console.log("loaded songs",loadedRecents);
             } catch (error){
                 console.error("Error loading songs", error)
             } finally {
@@ -70,9 +70,9 @@ function Listen({setNowPlaying}){
                         </form>
                         {dropdownResults.length > 0 && (
                             <div className="search-dropdown">
-                                {dropdownResults.map((song) => (
+                                {dropdownResults.map((song, index) => (
                                     <div
-                                        key={song.videoid}
+                                        key={`${song.videoid}-${index}`}
                                         className="search-result-item"
                                         onClick={() => handleResults(song)}
                                     >

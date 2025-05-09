@@ -12,13 +12,20 @@ function FloatingWindow({nowPlaying}){
     const [userInteracted, setUserInteracted] = useState(false);
     const audioRef = useRef(null);
 
-    console.log(nowPlaying.audio_url)
+    console.log(nowPlaying)
+    console.log(youTubeUrl)
+    console.log(audioRef)
+    console.log("FloatingWindow rendered");
+console.log("nowPlaying:", nowPlaying);
+console.log("userInteracted:", userInteracted);
+console.log("audio_url:", nowPlaying?.audio_url);
 
     useEffect(() => {
         const handleUserInteraction = () => setUserInteracted(true);
         window.addEventListener('click', handleUserInteraction, { once: true });
         window.addEventListener('keydown', handleUserInteraction, { once: true });
     
+        console.log("User interacted:", userInteracted);
         return () => {
             window.removeEventListener('click', handleUserInteraction);
             window.removeEventListener('keydown', handleUserInteraction);
@@ -33,25 +40,27 @@ function FloatingWindow({nowPlaying}){
             }
     },[nowPlaying])
 
+
+//youtube url if the video has videoid
     useEffect(() => {
-        if (nowPlaying?.audio_url) {
-            // Check if the URL is a YouTube link
-            const isYouTube = nowPlaying.audio_url.includes("youtube.com/watch?v=");
-            if (isYouTube) {
-                // Extract the video ID from the URL
-                const videoId = nowPlaying.audio_url.split("v=")[1].split("&")[0];
+        if (nowPlaying?.videoid) {
+                const videoId = nowPlaying.videoid
                 setYouTubeUrl(`https://www.youtube.com/embed/${videoId}?autoplay=1`);
-            }
+        } else {
+            setYouTubeUrl(null);
         }
     }, [nowPlaying]);
 
+//youtube url if the video has audio_id
     useEffect(() => {
         const audio = audioRef.current;
-        if (audio && nowPlaying?.audio_url) {
-            audio.pause(); // Stop current playback first
+        if(!audio || !nowPlaying || !nowPlaying.audio_url) 
+            return;
+
+            audio.pause(); 
             audio.src = nowPlaying.audio_url;
             audio.load();
-    
+            console.log("nowPlaying.audio_url:", nowPlaying?.audio_url);
             const handleCanPlay = () => {
                 if (!isPaused && userInteracted) {
                     audio.play().catch(err => {
@@ -65,11 +74,15 @@ function FloatingWindow({nowPlaying}){
             return () => {
                 audio.removeEventListener('canplaythrough', handleCanPlay);
             };
-        }
-    }, [nowPlaying?.audio_url, isPaused, userInteracted]);
+        
+            console.log("isPaused:", isPaused);
+    }, [nowPlaying, isPaused, userInteracted]);
 
     useEffect(() => {
-        if (audioRef.current && userInteracted) {
+        if (!audioRef.current || !userInteracted) 
+            return;
+            
+            
             if (!isPaused) {
                 audioRef.current.play().catch(err => {
                     console.error('Play failed:', err);
@@ -77,7 +90,9 @@ function FloatingWindow({nowPlaying}){
             } else {
                 audioRef.current.pause();
             }
-        }
+
+            console.log("isPaused:", isPaused);
+
     }, [isPaused, userInteracted]);
 
     return(
@@ -107,19 +122,24 @@ function FloatingWindow({nowPlaying}){
                     <button><i class="bi bi-skip-start-fill"></i></button>
                     <button onClick={() => setIsPaused(!isPaused)}><i className={isPaused ? "bi bi-caret-right-fill" : "bi bi-pause-fill" }></i></button>
                     <button><i class="bi bi-skip-end-fill"></i> </button>
-                    {youTubeUrl ? (
-                        <iframe
-                            width="100%"
-                            height="100%"
-                            src={youTubeUrl}
-                            frameBorder="0"
-                            allow="autoplay; encrypted-media"
-                            allowFullScreen
-                            title={nowPlaying.title}
-                        ></iframe>
-                    ) : (
-                        <p>No YouTube video found</p>
-                    )}
+                    <>
+                        <audio ref={audioRef} />
+                        {nowPlaying?.audio_url ? (
+                            null
+                        ) : youTubeUrl ? (
+                            <iframe
+                                width="100%"
+                                height="100%"
+                                src={youTubeUrl}
+                                frameBorder="0"
+                                allow="autoplay; encrypted-media"
+                                allowFullScreen
+                                title={nowPlaying?.title}
+                            />
+                        ) : (
+                            <p>No audio or video found</p>
+                        )}
+                    </>
                 </div>
                 <hr/>
             </div>
