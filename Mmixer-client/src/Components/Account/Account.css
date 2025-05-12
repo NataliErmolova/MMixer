@@ -1,0 +1,184 @@
+.Account{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background: linear-gradient(to right, #f8faff, #0158fa); */
+    padding: 20px;
+    max-height: 89vh;
+}
+  
+.account-top {
+    display: flex;
+    justify-content: space-around; /* Fixed comma issue */
+    flex-direction: row;
+    align-items: center;
+    background: white;
+    box-shadow: 0 200px 100px rgba(2, 11, 254, 0.543);
+    padding: 40px;
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .personal-card {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .profile-picture img{
+    width: 100px;
+    height: 100px;
+    background-color: #ddd;
+    border-radius: 50%;
+    margin: 0 auto 15px auto;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .username {
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .email {
+    font-size: 0.9rem;
+    color: #999;
+  }
+  
+  .categories {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  
+  .category-item {
+    border: #b3abab 2px solid;
+    border-radius: 5px;
+    width: 250px;
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    font-size: 0.95rem;
+    color: #6b5b7a;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .category-item:hover {
+    transform: scale(1.05);
+    color: #a26eea;
+  }
+  
+  .category-item i {
+    font-size: 1.4rem;
+    margin: 0px 5px;
+  }
+
+  /* second part of the website */
+
+
+  .account-friends {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 40px;
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .account-friends h3 {
+    margin-bottom: 0.3rem;
+    font-size: 1.2rem;
+  }
+  
+  .account-friends hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin-bottom: 1rem;
+  }
+  
+  /* Horizontal scroll container */
+  
+  .friends-scroll-row {
+    display: flex;
+    justify-content: space-around;
+    width: auto;
+    gap: 55px;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    width: 100%;
+    scroll-snap-type: x mandatory;
+  }
+
+  .friends-scroll-row::-webkit-scrollbar {
+    height: 6px;
+  }
+  .friends-scroll-row::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+  
+  
+  /* Friend container */
+  .friend {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  
+  /* Username styling */
+  .friend p {
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  
+  /* "See All" circle */
+  .circle-button {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: none;
+    background-color: #eee;
+    font-size: 0.7rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+
+  }
+  
+  .circle-button:hover {
+    background-color: #ddd;
+  }
+  
+  /* Profile picture button */
+  .profile-button {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .profile-button img {
+    width: 100px;
+    height:100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    transition: border-color 0.2s ease;
+  }
+  
+  .profile-button img:hover {
+    border-color: #888;
+  }
+  
+  

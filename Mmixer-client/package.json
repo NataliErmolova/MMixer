@@ -1,0 +1,63 @@
+{
+  "name": "mmixer",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^13.5.0",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "react": "^19.0.0",
+    "react-bootstrap": "^2.10.9",
+    "react-dom": "^19.0.0",
+    "react-router": "^7.4.0",
+    "react-scripts": "5.0.1",
+    "react-youtube": "^10.1.0",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "API": {
+    "BaseUrl": "http://localhost:5000",
+    "Register": "/register",
+    "Login": "/login",
+    "CurrUser": "/current_user_page",
+    "LogOut": "/log_out",
+    "Post": "/add_post",
+    "Get_Posts": "/get_posts",
+    "Get_User_Data": "/get_user_data",
+    "Get_Friend_Users": "/get_friend_users",
+    "Add_Comment": "/add_comment",
+    "Get_Comments": "/get_comments",
+    "Check_User_Access": "/check_user_access",
+    "Delete_Post": "/delete_post",
+    "Edit_Post": "/edit_post",
+    "Search_Music": "/search_music",
+    "Add_Recently_Played": "/add_recently_played",
+    "Get_Recently_played": "/get_recently_played"
+  }
+}

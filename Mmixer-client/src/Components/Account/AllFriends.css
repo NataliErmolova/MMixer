@@ -1,0 +1,73 @@
+#AllFriends{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background: linear-gradient(to right, #f8faff, #0158fa); */
+    padding: 20px;
+    max-height: 89vh;
+}
+.all-friends-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f9f9fc;
+  }
+  
+  .all-friends-page h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  .all-friends-friends-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .all-friends-friend {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+  }
+  
+  .all-friends-profile-button {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .all-friends-profile-button img {
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    transition: transform 0.2s ease;
+  }
+  
+  .all-friends-profile-button:hover img {
+    transform: scale(1.05);
+    border-color: #8c8793;
+  }
+  
+  .all-friends-friend p {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
+    text-align: center;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+  } 
