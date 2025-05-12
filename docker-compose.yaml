@@ -1,0 +1,34 @@
+services:
+  backend:
+    build:
+      context: ./Mmixer-API
+    container_name: flask_app
+    environment:
+      DB_HOST: host.docker.internal
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PASSWORD: App2025#
+      DB_PORT: 5432
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./Mmixer-api:/app
+    command: python api.py
+    working_dir: /app
+    networks:
+      - app-net
+
+  frontend:
+    build:
+      context: ./Mmixer-client
+    container_name: react_app
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    command: npm start
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: bridge
