@@ -1,0 +1,183 @@
+CREATE SEQUENCE public.id_seq;
+
+CREATE TABLE IF NOT EXISTS public.users
+(
+    id integer NOT NULL DEFAULT nextval('id_seq'::regclass),
+    username character varying COLLATE pg_catalog."default" NOT NULL,
+    email character varying COLLATE pg_catalog."default" NOT NULL,
+    password character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT users_pkey PRIMARY KEY (id)
+);
+CREATE TABLE IF NOT EXISTS public.recently_played_songs
+(
+    id integer NOT NULL DEFAULT nextval('id_seq'::regclass),
+    user_id integer NOT NULL,
+    title character varying COLLATE pg_catalog."default" NOT NULL,
+    artist character varying COLLATE pg_catalog."default" NOT NULL,
+    thumbnail_url character varying COLLATE pg_catalog."default" NOT NULL,
+    audio_url character varying COLLATE pg_catalog."default" NOT NULL,
+    "timestamp" date NOT NULL DEFAULT now(),
+    video_id character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT recently_played_songs_pkey PRIMARY KEY (id)
+);
+CREATE TABLE IF NOT EXISTS public.posts
+(
+    id integer NOT NULL DEFAULT nextval('id_seq'::regclass),
+    user_id integer NOT NULL,
+    content character varying COLLATE pg_catalog."default" NOT NULL,
+    date date NOT NULL DEFAULT now(),
+    CONSTRAINT posts_pkey PRIMARY KEY (id)
+);
+CREATE TABLE IF NOT EXISTS public.comments
+(
+    id integer NOT NULL DEFAULT nextval('id_seq'::regclass),
+    user_id integer NOT NULL,
+    post_id integer NOT NULL,
+    content character varying COLLATE pg_catalog."default" NOT NULL,
+    date date NOT NULL DEFAULT now(),
+    CONSTRAINT comments_pkey PRIMARY KEY (id)
+);
+CREATE OR REPLACE FUNCTION public.add_comment(
+	_user_id integer,
+	_post_id integer,
+	_content character varying,
+	_date timestamp without time zone)
+    RETURNS TABLE(comment_id integer, username character varying) 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+BEGIN
+
+	INSERT INTO comments(user_id, post_id, content, date)
+	VALUES (_user_id, _post_id, _content, _date )
+	returning id INTO comment_id;
+
+	RETURN QUERY
+	SELECT c.id, u.username FROM comments c
+	LEFT JOIN users u ON c.user_id = u.id
+	WHERE c.id = comment_id;
+
+END;
+$BODY$;
+
+CREATE OR REPLACE FUNCTION public.add_post(
+	_user_id integer,
+	_post_content character varying)
+    RETURNS TABLE(post_id integer, username character varying) 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+BEGIN
+
+	INSERT INTO posts(user_id, content)
+	VALUES (_user_id, _post_content)
+	RETURNING id INTO post_id;
+
+	RETURN QUERY
+	SELECT p.id, u.username FROM posts p
+	LEFT JOIN users u ON p.user_id = u.id
+	WHERE p.id = post_id;
+
+END;
+$BODY$;
+
+CREATE OR REPLACE FUNCTION public.get_posts(
+	_filter character varying)
+    RETURNS TABLE(id integer, username character varying, date date, content character varying, like_count integer, comment_count integer) 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+BEGIN
+	RETURN QUERY
+	SELECT p.id, u.username, p.date, p.content, 
+	COUNT(DISTINCT l.id), COUNT(DISTINCT c.id)  FROM public.posts p
+	LEFT JOIN public.users u ON p.user_id = u.id
+	LEFT JOIN public.likes l ON l.post_id = p.id
+	LEFT JOIN public.comments c ON c.post_id = p.id
+	WHERE p.content ILIKE '%' || _filter || '%' 
+		OR (_filter IS NULL OR _filter = '')
+	GROUP BY p.id, u.username, p.date, p.content;
+END;
+$BODY$;
+
+CREATE OR REPLACE FUNCTION public.get_user_emailpassword(
+	_email character varying,
+	_password character varying)
+    RETURNS TABLE(id integer, username character varying, email character varying) 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+BEGIN
+RETURN QUERY
+
+SELECT u.id, u.username, u.email FROM public.users u
+WHERE u.email = _email AND u.password = _password;
+
+END;
+$BODY$;
+
+CREATE OR REPLACE FUNCTION public.get_user_userid(
+	_userid integer)
+    RETURNS TABLE(id integer, username character varying, email character varying) 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+BEGIN
+RETURN QUERY
+SELECT u.id, u.username, u.email FROM public.users u
+WHERE u.id = _userid;
+
+END
+$BODY$;
+
+CREATE OR REPLACE FUNCTION public.login(
+	_email character varying,
+	_password character varying)
+    RETURNS TABLE(id integer, username character varying, email character varying) 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+BEGIN
+	RETURN QUERY
+    SELECT users.id, users.username, users.email
+    FROM public.users
+    WHERE users.email = _email
+    AND users.password = _password;
+END;
+$BODY$;
+
+CREATE OR REPLACE FUNCTION public.register(
+	_username character varying,
+	_email character varying,
+	_password character varying,
+	OUT _id integer)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+BEGIN
+	INSERT INTO public.users(
+	username, email, password)
+	VALUES (_username, _email, _password)
+	RETURNING id INTO _id;
+END;
+$BODY$;
