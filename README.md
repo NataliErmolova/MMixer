@@ -35,7 +35,7 @@ DB_PORT=your_db_port
 
 To complete the database setup, open **pgAdmin 4**, launch the Query Tool, and execute the contents of the following files to create the necessary tables and insert the initial data.
 
-[Create Tables, Sequences, and Functions Script](./sql_create_scripts.txt)
+[Create Tables, Sequences, and Functions Script](./mmixer-create-scripts.txt)
 
 
 ## Run the Project
